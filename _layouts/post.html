@@ -1,0 +1,47 @@
+---
+layout: default
+---
+
+<article class="post-container">
+
+    <!-- Editorial Post Header -->
+    <header class="post-header">
+        <h1 class="post-title">{{ page.title }}</h1>
+
+        <div class="post-meta-row">
+            <div class="meta-left">
+                <span class="meta-date">{{ page.date | date: "%Y-%m-%d" }}</span>
+                <span class="meta-tags">
+                    {% for tag in page.tags %}#{{ tag }} {% endfor %}
+                </span>
+            </div>
+
+            <!-- SMART LANGUAGE SWITCHER -->
+            <!-- Only runs if this post has a translation_key in its front matter -->
+            {% if page.translation_key %}
+                <!-- Find all posts that share this exact key -->
+                {% assign translations = site.posts | where: "translation_key", page.translation_key %}
+
+                <!-- Only show the switcher if more than 1 post is found -->
+                {% if translations.size > 1 %}
+                    <div class="meta-lang">
+                        <span class="lang-label">LANG:</span>
+                        {% for t in translations %}
+                            {% if t.url == page.url %}
+                                <span class="lang-link active">[ {{ t.lang | upcase }} ]</span>
+                            {% else %}
+                                <a href="{{ t.url | relative_url }}" class="lang-link">[ {{ t.lang | upcase }} ]</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- The actual Markdown content -->
+    <div class="post-content">
+        {{ content }}
+    </div>
+
+</article>

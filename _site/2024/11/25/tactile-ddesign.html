@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designing for adsasdfsdfsfdsfsdfsdfdsfdsfsdfsfdsfdsfsdfvsbbdbsbdbbdfbsdbdadaTactile FeedbackDesigning for adsasdfsdfsfdsfsdfsdfdsfdsfsdfsfdsfdsfsdfvsbbdbsbdbbdfbsdbdadaTactile FeedbackDesigning for adsasdfsdfsfdsfsdfsdfdsfdsfsdfsfdsfdsfsdfvsbbdbsbdbbdfbsdbdadaTactile Feedback | pmpwastaken</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <!-- Using relative paths so it works everywhere -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- 1. The Living Background -->
+    <canvas id="bg-canvas" class="living-bg"></canvas>
+    <div class="living-grain"></div>
+
+    <!-- 2. The Data Widget Dropdown -->
+    <div id="widget-pane" class="widget-pane material-glass-nav" aria-hidden="true">
+        <div class="swiss-container">
+            <div class="swiss-grid widget-zone">
+                <div class="col-span-12">
+                    <span class="ui-label" style="color: var(--text-secondary); display: block; margin-bottom: 8px;">[ Global Time - 24H ]</span>
+                    <div class="widget-grid" style="margin-bottom: var(--space-lg);" id="clock-grid"></div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                        <span class="ui-label" style="color: var(--text-secondary);">[ Markets: FX & Crypto ]</span>
+                        <span class="ui-label" style="font-size: 0.65rem; color: var(--accent-red);" id="fx-status">Updating...</span>
+                    </div>
+                    <div class="widget-grid" style="margin-bottom: var(--space-lg);" id="fx-grid"></div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                        <span class="ui-label" style="color: var(--text-secondary);">[ Equities (Priced in CHF) ]</span>
+                        <span class="ui-label" style="font-size: 0.65rem; color: var(--accent-red);" id="stock-status">Fetching...</span>
+                    </div>
+                    <div class="widget-grid" id="stock-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. The Global Navigation -->
+    <nav class="global-nav material-glass-nav">
+        <div class="nav-links">
+            <a href="/index.html" class="nav-link">home</a>
+            <a href="/about.html" class="nav-link">about</a>
+            <a href="/blog.html" class="nav-link">blog</a>
+            <a href="/projects.html" class="nav-link">projects</a>
+            <a href="/orgs.html" class="nav-link">orgs</a>
+            <a href="/affiliates.html" class="nav-link">affiliates</a>
+            <button id="widget-toggle" class="nav-link nav-btn" aria-expanded="false">widgets</button>
+        </div>
+    </nav>
+
+    <!-- 4. THE CONTENT INJECTOR -->
+    <!-- This is where Jekyll will automatically insert your specific page content -->
+    <main class="swiss-container">
+        <div class="swiss-grid" id="app-root">
+            <article class="post-container">
+
+    <!-- Editorial Post Header -->
+    <header class="post-header">
+        <h1 class="post-title">Designing for adsasdfsdfsfdsfsdfsdfdsfdsfsdfsfdsfdsfsdfvsbbdbsbdbbdfbsdbdadaTactile FeedbackDesigning for adsasdfsdfsfdsfsdfsdfdsfdsfsdfsfdsfdsfsdfvsbbdbsbdbbdfbsdbdadaTactile FeedbackDesigning for adsasdfsdfsfdsfsdfsdfdsfdsfsdfsfdsfdsfsdfvsbbdbsbdbbdfbsdbdadaTactile Feedback</h1>
+
+        <div class="post-meta-row">
+            <div class="meta-left">
+                <span class="meta-date">2024-11-25</span>
+                <span class="meta-tags">
+                    #UI #architecture 
+                </span>
+            </div>
+
+            <!-- SMART LANGUAGE SWITCHER -->
+            <!-- Only runs if this post has a translation_key in its front matter -->
+            
+        </div>
+    </header>
+
+    <!-- The actual Markdown content -->
+    <div class="post-content">
+        <p>Digital spaces have become flat, frictionless, and entirely devoid of physical resistance. Whenasda we interact with a modern UI, we are touching glass, but our visual cortex is being fed nothing but borderless colored rectangles.</p>
+
+<p>There is no <em>weight</em>.</p>
+
+<blockquote>
+  <p>“Minimalism should not be confused with emptiness. True minimalism strips away the unnecessary to elevate the structural.”</p>
+</blockquote>
+
+<h3 id="the-constructivist-approach">The Constructivist Approach</h3>
+<p>To fix this, we must reintroduce physical constraints into our web layouts:</p>
+
+<ul>
+  <li><strong>Harsh Shadows:</strong> Shadows should not be 100px blurry blobs. They should be offset coordinates that denote actual Z-axis height.</li>
+  <li><strong>Granular Textures:</strong> By injecting mathematical noise into our backdrops, the eye perceives a physical surface.</li>
+  <li><strong>Deliberate Resistance:</strong> Animations shouldn’t “fire and forget”. They should scrub based on the user’s scroll velocity.</li>
+</ul>
+
+<p>Look at the image below. Notice the rigid structure.</p>
+
+<p><img src="images/banner.png" alt="Constructivist Architecture Example" /></p>
+
+<p>This is why we engineer websites as environments, not just documents.</p>
+
+    </div>
+
+</article>
+
+        </div>
+    </main>
+
+    <!-- 5. The Magic Audio Island -->
+    <div class="island-widget material-glass-pane">
+        <!-- Notice the dynamic audio tag below. It checks the page front-matter for a track, or defaults to audio.mp3 -->
+        <audio id="island-audio" src="/audio.mp3" loop autoplay></audio>
+
+        <div class="island-compact" id="island-compact-view">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+        </div>
+
+        <div class="island-expanded">
+            <!-- Dynamically fetch art, default to profile.png if none provided -->
+            <div class="island-art" style="background-image: url('/images/profile.png'); background-size: cover;"></div>
+
+            <div class="island-info">
+                <!-- Dynamically fetch title, default to System Audio -->
+                <div class="island-title">System Audio</div>
+
+                <!-- Added an ID here so JavaScript can change the text -->
+                <a href="#" class="island-subtitle" id="audio-status">Playing...</a>
+
+                <div class="island-progress-bg">
+                    <div class="island-progress-fill" id="island-progress"></div>
+                </div>
+            </div>
+            <div class="island-controls">
+                <span id="btn-prev" class="ctrl-btn" aria-label="Restart Track">[ &lt;&lt; ]</span>
+                <span id="btn-play" class="ctrl-btn" aria-label="Play/Pause">[ || ]</span>
+                <span id="btn-next" class="ctrl-btn" aria-label="Skip Forward">[ &gt;&gt; ]</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Global Scripts -->
+    <script src="/app.js"></script>
+</body>
+</html>

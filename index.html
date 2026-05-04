@@ -1,0 +1,95 @@
+---
+layout: default
+title: Home
+audio: audio.mp3
+audio_title: "Example Title"
+audio_art: "images/audio_icon.png"
+---
+
+<!-- HERO BANNER COMPONENT -->
+<div class="col-span-12">
+    <div class="profile-banner">
+
+        <div class="banner-bg" style="background-image: url('images/banner.png');"></div>
+        <div class="banner-sheen" id="banner-sheen"></div>
+        <div class="quarter-label" id="quarter-label">Q- ----</div>
+
+        <div class="center-stack">
+            <div class="avatar-wrapper">
+                <div class="avatar-image" style="background-image: url('images/profile.png');"></div>
+            </div>
+
+            <div class="profile-pill">
+                <span class="username">@pmpwastaken</span>
+                <div class="social-links">
+                    <a href="https://x.com" target="_blank" class="social-icon" aria-label="X"><img src="images/x_icon.png" alt="X"></a>
+                    <a href="https://youtube.com" target="_blank" class="social-icon" aria-label="YouTube"><img src="images/yt_icon.png" alt="YouTube"></a>
+                    <a href="https://reddit.com" target="_blank" class="social-icon" aria-label="Reddit"><img src="images/reddit_icon.png" alt="Reddit"></a>
+                    <a href="https://github.com" target="_blank" class="social-icon" aria-label="GitHub"><img src="images/github_icon.png" alt="GitHub"></a>
+                    <a href="#" target="_blank" class="social-icon" aria-label="SimpleX"><img src="images/simplex_logo.png" alt="SimpleX"></a>
+                </div>
+            </div>
+
+            <div class="slogan-pill">trying to find signal in the noise</div>
+        </div>
+    </div>
+</div>
+<!-- END HERO BANNER -->
+
+<!-- We will place the Blog Widget below this banner in the next phase! -->
+
+<!-- VISUAL SEPARATOR -->
+<div class="col-span-12" style="margin: var(--space-lg) 0 var(--space-md) 0;">
+    <hr class="constructivist-rule" style="margin: 0; opacity: 0.3;">
+</div>
+
+<!-- THE THREAD BOARD (BLOG FEED) -->
+<div class="col-span-12 thread-board" style="margin-top: 0;">
+
+    <!-- Luxurious Clickable Header -->
+    <a href="{{ '/blog.html' | relative_url }}" class="thread-header-link">
+        Recent Posts <span class="arrow">↗</span>
+    </a>
+
+    <!-- DARK DATA MODULE WRAPPER -->
+    <div class="dark-data-module">
+        <div class="thread-list-container" id="feed-scroll-area">
+
+            {% assign rendered_keys = "" %}
+            {% assign visible_count = 0 %}
+
+            {% for post in site.posts %}
+                {% if post.translation_key %}
+                    {% assign key_check = "|" | append: post.translation_key | append: "|" %}
+                    {% if rendered_keys contains key_check %}
+                        {% continue %}
+                    {% endif %}
+                    {% assign rendered_keys = rendered_keys | append: key_check %}
+                {% endif %}
+                {% assign visible_count = visible_count | plus: 1 %}
+
+                <a href="{{ post.url | relative_url }}" class="thread-item {% if visible_count > 5 %}is-hidden{% endif %}">
+                    <div class="thread-meta">{{ post.date | date: "%Y-%m-%d" }}</div>
+                    <div class="thread-title">{{ post.title }}</div>
+                    <div class="thread-tags">
+                        {% for tag in post.tags limit:2 %}#{{ tag }} {% endfor %}
+                        {% if post.translation_key %}
+                            <span style="color: rgba(255,255,255,0.4);">[ MULTI ]</span>
+                        {% else %}
+                            [{{ post.lang | default: "EN" | upcase }}]
+                        {% endif %}
+                    </div>
+                </a>
+            {% else %}
+                <div style="padding: 24px; text-align: center; font-family: var(--font-mono); color: var(--accent-slate);">[ NO THREADS FOUND ]</div>
+            {% endfor %}
+
+        </div>
+
+        {% if site.posts.size > 5 %}
+            <div class="thread-loader" id="feed-loader">↓ LOAD OLDER THREADS</div>
+        {% endif %}
+    </div>
+
+</div>
+<!-- END THREAD BOARD -->

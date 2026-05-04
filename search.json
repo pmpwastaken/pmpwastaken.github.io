@@ -1,0 +1,14 @@
+---
+---
+[
+  {% for post in site.posts %}
+  {
+    "title": {{ post.title | default: "Untitled" | jsonify }},
+    "url": {{ post.url | relative_url | jsonify }},
+    "date": {{ post.date | date: "%Y-%m-%d" | jsonify }},
+    "tags": {{ post.tags | jsonify }},
+    "lang": {{ post.lang | default: "en" | jsonify }},
+    "translation_key": {{ post.translation_key | jsonify }}
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]

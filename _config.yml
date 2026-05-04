@@ -1,0 +1,14 @@
+name: pmpwastaken
+description: "trying to find signal in the noise"
+
+# CRITICAL ROUTING:
+# If your repo is exactly "yourusername.github.io", leave baseurl as "".
+# If your repo is named "my-website", change baseurl to "/my-website".
+baseurl: ""
+url: ""
+
+# Tell Jekyll not to publish these backend files to the live web
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md

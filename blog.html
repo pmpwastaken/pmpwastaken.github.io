@@ -1,0 +1,46 @@
+---
+layout: default
+title: Blog
+audio: audio.mp3
+---
+
+<div class="col-span-12 blog-directory">
+
+    <h1 class="post-title" style="margin-bottom: var(--space-sm);">Blog</h1>
+    <p style="color: var(--text-secondary); margin-bottom: var(--space-lg); font-family: var(--font-mono); font-size: 0.85rem;">[ INDEXED RECORDS ]</p>
+
+    <!-- The Dark Tactile Search Console -->
+    <div class="search-console dark-data-module">
+        <input type="text" id="search-input" placeholder="Query records..." class="luxury-search-input" autocomplete="off" spellcheck="false">
+
+        <div class="advanced-filters">
+            <!-- Date Logic -->
+            <div class="filter-group">
+                <button id="sort-toggle" class="brutalist-toggle" style="margin-right: 12px;">[ DESC ↓ ]</button>
+                <span class="filter-label">FROM:</span>
+                <input type="date" id="date-from" class="brutalist-input">
+                <span class="filter-label">TO:</span>
+                <input type="date" id="date-to" class="brutalist-input">
+            </div>
+
+            <!-- Tag Logic -->
+            <div class="filter-group">
+                <span class="filter-label">TAGS:</span>
+                <button id="tag-logic-toggle" class="brutalist-toggle" aria-label="Toggle AND/OR">[ OR ]</button>
+                <div id="tag-filters" class="tag-row">
+                    <!-- JS Injects Tags Here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Container (Now matches the dark theme) -->
+    <div class="dark-data-module" style="margin-bottom: var(--space-xxl);">
+        <div class="thread-list-container" id="search-results" style="max-height: 70vh;">
+            <div style="padding: 40px; text-align: center; font-family: var(--font-mono); color: var(--accent-slate);">
+                [ INITIALIZING DATA MODULE... ]
+            </div>
+        </div>
+    </div>
+
+</div>
