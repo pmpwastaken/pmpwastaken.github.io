@@ -38,38 +38,60 @@ const SwissConstructivist = (() => {
         const progressFill = document.getElementById('island-progress');
         const compactView = document.getElementById('island-compact-view');
         const statusText = document.getElementById('audio-status');
-
         if (!audio) return;
 
         const updateUI = () => {
             if (audio.paused) {
                 btnPlay.textContent = "[ > ]";
                 compactView.classList.add('is-paused');
-                if(statusText) statusText.textContent = "Paused";
+                // Prevent 'Paused' from overwriting 'Buffering...' text
+                if (statusText && statusText.textContent !== "Buffering...") {
+                    statusText.textContent = "Paused";
+                }
             } else {
                 btnPlay.textContent = "[ || ]";
                 compactView.classList.remove('is-paused');
-                if(statusText) statusText.textContent = "Playing...";
+                if (statusText) statusText.textContent = "Playing...";
             }
         };
 
+        // Standard Play/Pause triggers
         audio.addEventListener('play', updateUI);
         audio.addEventListener('pause', updateUI);
         audio.addEventListener('loadeddata', updateUI);
 
-        audio.addEventListener('timeupdate', () => {
-            if (!audio.duration) return;
-            progressFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+        // Network & Buffering Event Handlers
+        audio.addEventListener('waiting', () => {
+            if (statusText) statusText.textContent = "Buffering...";
+            compactView.classList.add('is-paused'); // Visually pause waveform
+        });
+        audio.addEventListener('playing', updateUI); // Triggers when buffering finishes
+        audio.addEventListener('stalled', () => {
+            if (statusText) statusText.textContent = "Network Stalled";
         });
 
-        btnPlay.addEventListener('click', () => {
-            audio.paused ? audio.play().catch(e=>console.warn("Autoplay blocked. User must click first.")) : audio.pause();
-        });
-        btnPrev.addEventListener('click', () => { audio.currentTime = 0; if (audio.paused) audio.play(); });
-        btnNext.addEventListener('click', () => { audio.currentTime = Math.min(audio.currentTime + 10, audio.duration); if (audio.paused) audio.play(); });
+            // Critical fail-safe if the file drops completely
+            audio.addEventListener('error', () => {
+                if (statusText) statusText.textContent = "Audio Error";
+                compactView.classList.add('is-paused');
+            });
 
-        const playPromise = audio.play();
-        if (playPromise !== undefined) playPromise.then(() => updateUI()).catch(() => updateUI());
+            // Time Update
+            audio.addEventListener('timeupdate', () => {
+                if (!audio.duration) return;
+                progressFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+            });
+
+            // Controls
+            btnPlay.addEventListener('click', () => {
+                audio.paused ? audio.play().catch(e => console.warn("Autoplay blocked.")) : audio.pause();
+            });
+            btnPrev.addEventListener('click', () => { audio.currentTime = 0; if (audio.paused) audio.play(); });
+            btnNext.addEventListener('click', () => { audio.currentTime = Math.min(audio.currentTime + 10, audio.duration); if (audio.paused) audio.play(); });
+
+            // Initial Autoplay logic
+            const playPromise = audio.play();
+            if (playPromise !== undefined) playPromise.then(() => updateUI()).catch(() => updateUI());
     };
 
         const initQuarterLabel = () => {

@@ -74,7 +74,7 @@
     <!-- 5. The Magic Audio Island -->
     <div class="island-widget material-glass-pane">
         <!-- Notice the dynamic audio tag below. It checks the page front-matter for a track, or defaults to audio.mp3 -->
-        <audio id="island-audio" src="/audio.mp3" loop autoplay></audio>
+        <audio id="island-audio" src="/audio/tracks/graphene_glow.mp3" loop autoplay></audio>
 
         <div class="island-compact" id="island-compact-view">
             <div class="waveform-bar"></div>
@@ -84,11 +84,11 @@
 
         <div class="island-expanded">
             <!-- Dynamically fetch art, default to profile.png if none provided -->
-            <div class="island-art" style="background-image: url('/images/profile.png'); background-size: cover;"></div>
+            <div class="island-art" style="background-image: url('/images/audio/default_audio.png'); background-size: cover;"></div>
 
             <div class="island-info">
                 <!-- Dynamically fetch title, default to System Audio -->
-                <div class="island-title">System Audio</div>
+                <div class="island-title">graphene glow</div>
 
                 <!-- Added an ID here so JavaScript can change the text -->
                 <a href="#" class="island-subtitle" id="audio-status">Playing...</a>
