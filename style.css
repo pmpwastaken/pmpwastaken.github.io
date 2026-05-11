@@ -563,3 +563,15 @@ p { margin-bottom: var(--space-md); max-width: 65ch; }
     background: transparent; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: none; color: var(--accent-slate);
 }
 .dark-data-module .thread-loader:hover { color: var(--bg-layer-2); background: rgba(255,255,255,0.05); }
+
+/* Override for tiny inline logos inside paragraphs */
+.post-content img.inline-icon {
+    display: inline-block;
+    width: auto;
+    height: 0.9em; /* Automatically scales to perfectly match the text size */
+    margin: 0 4px; /* Tiny bit of breathing room on the sides */
+    border: none; /* Removes the brutalist border */
+    box-shadow: none; /* Removes the shadow */
+    border-radius: 0;
+    vertical-align: middle; /* Keeps it perfectly aligned with the letters */
+}
