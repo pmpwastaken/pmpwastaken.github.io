@@ -575,3 +575,68 @@ p { margin-bottom: var(--space-md); max-width: 65ch; }
     border-radius: 0;
     vertical-align: middle; /* Keeps it perfectly aligned with the letters */
 }
+
+/* --------------------------------------------------------------------------
+ * 10. MOBILE RESPONSIVENESS (THE VIEWPORT OVERHAUL)
+ * -------------------------------------------------------------------------- */
+@media (max-width: 800px) {
+
+    /* 1. Fix the Navigation Bar Brackets & Overflow */
+    .global-nav {
+        padding: 0 var(--space-sm);
+    }
+
+    .nav-links {
+        overflow-x: auto; /* Creates a swipeable menu on mobile */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Hides scrollbar on Firefox */
+        gap: 12px; /* Tighter gaps for mobile */
+        padding-bottom: 4px;
+    }
+
+    .nav-links::-webkit-scrollbar {
+        display: none; /* Hides scrollbar on Chrome/Safari */
+    }
+
+    .nav-link {
+        white-space: nowrap; /* STRICTLY FORBIDS brackets from breaking onto new lines */
+        font-size: 0.75rem;
+    }
+
+    /* 2. Fix the Ultra-Compressed Recent Posts (Thread Board) */
+    .dark-data-module .thread-item,
+    .thread-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 16px 12px;
+    }
+
+    /* Re-order the data for a better mobile reading experience */
+    .thread-meta { order: 2; font-size: 0.7rem; opacity: 0.7; }
+    .thread-title { order: 1; font-size: 1.1rem; line-height: 1.3; }
+    .thread-tags { order: 3; margin-top: 4px; }
+
+    /* 3. Tweak the Hero Banner for small screens */
+    .profile-pill {
+        flex-direction: column; /* Stacks the username above the social icons */
+        border-radius: 16px;
+        padding: 12px 16px;
+        gap: 8px;
+    }
+
+    .quarter-label {
+        top: 8px;
+        right: 8px;
+        font-size: 0.65rem;
+        padding: 4px 8px;
+    }
+
+    /* 4. Fix Advanced Filter Inputs Squishing */
+    .filter-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
