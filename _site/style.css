@@ -542,21 +542,65 @@ p { margin-bottom: var(--space-md); max-width: 65ch; }
 .brutalist-toggle:hover, .brutalist-toggle.active { background: var(--bg-layer-2); color: var(--text-primary); }
 
 /* Premium Tag Chips */
-/* Horizontal Tag Carousel with Gradient Edge Fading */
-.tag-row {
-    display: flex; gap: 8px;
-    flex-wrap: nowrap; /* Forces a single line */
-    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-    padding: 4px 0 8px 0; /* Breathing room so shadows don't clip */
-
-    /* The magic CSS that fades the left/right edges to transparent */
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+/* Physical Tag Carousel (Mobile & Desktop Safe) */
+.tag-carousel-group {
+    width: 100%;
+    min-width: 0; /* CRITICAL: Prevents flexbox from forcing the screen wider on mobile */
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-.tag-row::-webkit-scrollbar { display: none; }
 
+.tag-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0; /* CRITICAL: Contains the overflow */
+}
+
+/* The strict window the tags slide inside */
+.tag-track {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex: 1;
+    min-width: 0;
+}
+.tag-track::-webkit-scrollbar { display: none; }
+
+/* The Physical Arrow Buttons */
+.tag-nav-btn {
+    background: transparent;
+    color: var(--bg-layer-2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0; /* Prevents buttons from squishing */
+}
+.tag-nav-btn:hover:not(:disabled) {
+    background: var(--bg-layer-2);
+    color: var(--text-primary);
+    border-color: var(--bg-layer-2);
+}
+.tag-nav-btn:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* The Tag Chips themselves */
 .tag-btn {
-    flex-shrink: 0; /* Prevents tags from squishing together */
+    flex-shrink: 0; /* Prevents tags from squishing */
     background: transparent; border: 1px dashed rgba(255,255,255,0.3);
     padding: 6px 12px; border-radius: 20px;
     font-family: var(--font-mono); font-size: 0.75rem; color: rgba(255,255,255,0.6);

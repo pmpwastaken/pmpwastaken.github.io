@@ -152,17 +152,20 @@ const SwissConstructivist = (() => {
             const resultsContainer = document.getElementById('search-results');
             const tagContainer = document.getElementById('tag-filters');
 
-            // Advanced Controls
             const sortBtn = document.getElementById('sort-toggle');
             const tagLogicBtn = document.getElementById('tag-logic-toggle');
             const dateFromInput = document.getElementById('date-from');
             const dateToInput = document.getElementById('date-to');
 
+            // Physical Carousel Elements
+            const tagPrev = document.getElementById('tag-prev');
+            const tagNext = document.getElementById('tag-next');
+
             if (!searchInput || !resultsContainer) return;
 
             let posts = [];
-            let activeTags = new Set(); // Now supports MULTIPLE tags
-            let tagLogicIsAND = false;  // false = OR, true = AND
+            let activeTags = new Set();
+            let tagLogicIsAND = false;
             let sortDesc = true;
 
             try {
@@ -182,7 +185,6 @@ const SwissConstructivist = (() => {
                     const btn = document.createElement('button');
                     btn.className = 'tag-btn'; btn.textContent = `#${tag}`;
                     btn.onclick = () => {
-                        // Toggle multiple tags
                         activeTags.has(tag) ? activeTags.delete(tag) : activeTags.add(tag);
                         btn.classList.toggle('active');
                         renderResults();
@@ -190,17 +192,36 @@ const SwissConstructivist = (() => {
                     tagContainer.appendChild(btn);
                 });
                 renderResults();
+
+                // Carousel Arrow Logic
+                const updateTagNav = () => {
+                    if (!tagContainer || !tagPrev || !tagNext) return;
+                    // 2px tolerance for browser rounding errors
+                    tagPrev.disabled = tagContainer.scrollLeft <= 2;
+                    tagNext.disabled = tagContainer.scrollLeft >= (tagContainer.scrollWidth - tagContainer.clientWidth - 2);
+                };
+
+                if (tagContainer && tagPrev && tagNext) {
+                    tagContainer.addEventListener('scroll', updateTagNav, { passive: true });
+                    window.addEventListener('resize', updateTagNav);
+
+                    tagPrev.onclick = () => tagContainer.scrollBy({ left: -200, behavior: 'smooth' });
+                    tagNext.onclick = () => tagContainer.scrollBy({ left: 200, behavior: 'smooth' });
+
+                    // Initial check after tags render
+                    setTimeout(updateTagNav, 100);
+                }
+
             } catch (error) {
                 resultsContainer.innerHTML = `<div style="padding: 24px; text-align: center; color: var(--accent-red); font-family: var(--font-mono);">[ NETWORK ERROR ]</div>`;
             }
 
-            // Event Listeners for all new inputs
-            // 150ms Debounce to prevent keyboard lag
             let debounceTimer;
             searchInput.addEventListener('input', () => {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => { renderResults(); }, 150);
             });
+
             dateFromInput.addEventListener('change', renderResults);
             dateToInput.addEventListener('change', renderResults);
 
@@ -223,38 +244,31 @@ const SwissConstructivist = (() => {
                 const toDateStr = dateToInput.value;
 
                 let filtered = posts.filter(post => {
-                    // 1. Text Search Logic
                     const titleMatch = post.title ? post.title.toLowerCase().includes(query) : false;
                     const langMatch = post.lang ? post.lang.toLowerCase().includes(query) : false;
                     const tagMatchText = (post.tags && Array.isArray(post.tags)) ? post.tags.some(t => t.toLowerCase().includes(query)) : false;
                     const matchesSearch = titleMatch || langMatch || tagMatchText;
 
-                    // 2. Advanced Tag Logic (AND / OR)
                     let matchesTags = true;
                     if (activeTags.size > 0) {
                         const postTags = (post.tags && Array.isArray(post.tags)) ? post.tags : [];
-                        if (tagLogicIsAND) {
-                            matchesTags = Array.from(activeTags).every(t => postTags.includes(t));
-                        } else {
-                            matchesTags = Array.from(activeTags).some(t => postTags.includes(t));
-                        }
+                        matchesTags = tagLogicIsAND
+                        ? Array.from(activeTags).every(t => postTags.includes(t))
+                        : Array.from(activeTags).some(t => postTags.includes(t));
                     }
 
-                    // 3. Date Range Logic
                     let matchesDate = true;
                     if (fromDateStr || toDateStr) {
                         const postDate = new Date(post.date);
-                        if (fromDateStr) { matchesDate = matchesDate && (postDate >= new Date(fromDateStr)); }
-                        if (toDateStr) { matchesDate = matchesDate && (postDate <= new Date(toDateStr)); }
+                        if (fromDateStr) matchesDate = matchesDate && (postDate >= new Date(fromDateStr));
+                        if (toDateStr) matchesDate = matchesDate && (postDate <= new Date(toDateStr));
                     }
 
                     return matchesSearch && matchesTags && matchesDate;
                 });
 
-                // Sorting
                 filtered.sort((a, b) => sortDesc ? new Date(b.date) - new Date(a.date) : new Date(a.date) - new Date(b.date));
 
-                // Translation De-duplication
                 const renderedKeys = new Set(), finalPosts = [];
                 filtered.forEach(post => {
                     if (post.translation_key && post.translation_key !== "") {
@@ -264,7 +278,6 @@ const SwissConstructivist = (() => {
                     finalPosts.push(post);
                 });
 
-                // Render Output
                 if (finalPosts.length === 0) {
                     resultsContainer.innerHTML = `<div style="padding: 40px; text-align: center; font-family: var(--font-mono); color: var(--accent-slate);">[ 0 MATCHES FOUND ]</div>`;
                     return;

@@ -76,16 +76,22 @@
                 <input type="date" id="date-to" class="brutalist-input">
             </div>
 
-            <!-- Tag Logic -->
-            <div class="filter-group">
+            <!-- Tag Logic & Physical Carousel -->
+            <div class="filter-group tag-carousel-group">
                 <span class="filter-label">TAGS:</span>
                 <button id="tag-logic-toggle" class="brutalist-toggle" aria-label="Toggle AND/OR">[ OR ]</button>
-                <div id="tag-filters" class="tag-row">
-                    <!-- JS Injects Tags Here -->
+
+                <div class="tag-carousel-wrapper">
+                    <button class="tag-nav-btn" id="tag-prev" disabled aria-label="Scroll left">[ &lt; ]</button>
+                    <div id="tag-filters" class="tag-track">
+                        <!-- JS Injects Tags Here -->
+                    </div>
+                    <button class="tag-nav-btn" id="tag-next" aria-label="Scroll right">[ &gt; ]</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- END Search Console -->
 
     <!-- Results Container (Now matches the dark theme) -->
     <div class="dark-data-module" style="margin-bottom: var(--space-xxl);">
