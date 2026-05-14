@@ -104,15 +104,15 @@ const SwissConstructivist = (() => {
         const initBannerPhysics = () => {
             const sheen = document.getElementById('banner-sheen');
             if (!sheen) return;
-
             let targetScroll = 0, currentScroll = 0;
             window.addEventListener('scroll', () => { targetScroll = window.scrollY; }, { passive: true });
 
             const scrubSheen = () => {
                 currentScroll += (targetScroll - currentScroll) * 0.1;
                 if (currentScroll < 800) {
-                    const position = (currentScroll / 400) * 200 - 100;
-                    sheen.style.backgroundPosition = `${position}% 0`;
+                    // Map 0->400px scroll to 0->100% transform. translate3d uses GPU.
+                    const position = (currentScroll / 400) * 100;
+                    sheen.style.transform = `translate3d(${position}%, 0, 0)`;
                 }
                 requestAnimationFrame(scrubSheen);
             };
@@ -195,7 +195,12 @@ const SwissConstructivist = (() => {
             }
 
             // Event Listeners for all new inputs
-            searchInput.addEventListener('input', renderResults);
+            // 150ms Debounce to prevent keyboard lag
+            let debounceTimer;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => { renderResults(); }, 150);
+            });
             dateFromInput.addEventListener('change', renderResults);
             dateToInput.addEventListener('change', renderResults);
 
@@ -404,7 +409,7 @@ const LivingBackground = (() => {
         }
         float fbm(vec2 p) {
             float v = 0.0, a = 0.52, tot = 0.0; mat2 rot = mat2(cos(0.6), -sin(0.6), sin(0.6), cos(0.6));
-            for (int i = 0; i < 7; i++) { v += a * gnoise(p); tot += a; p = rot * p * 2.03 + vec2(1.7, 9.2); a *= 0.50; }
+            for (int i = 0; i < 3; i++) { v += a * gnoise(p); tot += a; p = rot * p * 2.03 + vec2(1.7, 9.2); a *= 0.50; }
             return v / tot;
         }
         float warp(vec2 p, float t) {
