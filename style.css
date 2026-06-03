@@ -556,7 +556,8 @@ p { margin-bottom: var(--space-md); max-width: 65ch; }
     align-items: center;
     gap: 8px;
     flex: 1;
-    min-width: 0; /* CRITICAL: Contains the overflow */
+    min-width: 0;
+    width: 100%; /* CRITICAL FIX: Forces it to obey parent width */
 }
 
 /* The strict window the tags slide inside */
@@ -692,10 +693,13 @@ p { margin-bottom: var(--space-md); max-width: 65ch; }
         padding: 4px 8px;
     }
 
-    /* 4. Fix Advanced Filter Inputs Squishing */
+    /* 4. Fix Advanced Filter Inputs Squishing & Bleeding */
     .filter-group {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
+        width: 100%; /* CRITICAL FIX: Stops the invisible screen stretching */
+        max-width: 100%;
+        overflow: hidden; /* Bulletproof cutoff */
     }
 }

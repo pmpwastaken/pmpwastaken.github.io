@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "My first time with Oral Nicotine & other things"
+title: "my first time with oral nicotine & other things"
 date: 2026-05-11
 tags: [vices, vaping, snus, zyn, weed, alcohol, drugs, nicotine, pharmacology]
 lang: en
